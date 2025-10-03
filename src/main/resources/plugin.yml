@@ -1,0 +1,7 @@
+name: PerchWarehouse
+version: '1.0-Development'
+main: dev.ev1dent.perchWarehouse.WarehousePlugin
+api-version: '1.21'
+prefix: RealEstate
+load: STARTUP
+authors: [ Evident_Dev ]

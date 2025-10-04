@@ -8,6 +8,7 @@ import dev.ev1dent.perchWarehouse.WarehousePlugin;
 import dev.ev1dent.perchWarehouse.configuration.MessageManager;
 import dev.ev1dent.perchWarehouse.managers.ConfigManager;
 import dev.ev1dent.perchWarehouse.managers.QueueManager;
+import dev.ev1dent.perchWarehouse.managers.TierManager;
 import dev.ev1dent.perchWarehouse.managers.WarehouseManager;
 import dev.ev1dent.perchWarehouse.utilities.MiniUtil;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
@@ -27,6 +28,9 @@ public class CommandWarehouse {
     MessageManager messageManager = new MessageManager(plugin());
     WarehouseManager warehouseManager = new WarehouseManager();
     QueueManager queueManager = new QueueManager();
+
+    //TEMP
+    TierManager tierManager = new TierManager(plugin());
 
     public static String[] CommandAliases = new String[] {"wh"};
 
@@ -141,7 +145,16 @@ public class CommandWarehouse {
                     return Command.SINGLE_SUCCESS;
                 })
             )
-
+            .then(Commands.literal("test")
+                .requires(source -> source.getSender().hasPermission("warehouse.test"))
+                    .then(Commands.argument("count", IntegerArgumentType.integer())
+                    .executes(ctx -> {
+                        CommandSender sender = ctx.getSource().getSender();
+                        sender.sendMessage(MiniUtil.format(tierManager.getTierForPlayerCount(ctx.getArgument("count", Integer.class))));
+                        return Command.SINGLE_SUCCESS;
+                    })
+                )
+            )
             .build();
     }
 }

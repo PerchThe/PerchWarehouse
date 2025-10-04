@@ -4,6 +4,8 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
+import dev.ev1dent.perchWarehouse.WarehousePlugin;
+import dev.ev1dent.perchWarehouse.configuration.MessageManager;
 import dev.ev1dent.perchWarehouse.managers.ConfigManager;
 import dev.ev1dent.perchWarehouse.managers.QueueManager;
 import dev.ev1dent.perchWarehouse.managers.WarehouseManager;
@@ -28,9 +30,14 @@ import org.bukkit.entity.Player;
  */
 public class CommandWarehouse {
 
-    QueueManager queueManager = new QueueManager();
-    WarehouseManager warehouseManager = new WarehouseManager();
+    private WarehousePlugin plugin(){
+        return WarehousePlugin.getPlugin(WarehousePlugin.class);
+    }
+
     ConfigManager configManager = new ConfigManager();
+    MessageManager messageManager = new MessageManager(plugin());
+    WarehouseManager warehouseManager = new WarehouseManager();
+    QueueManager queueManager = new QueueManager();
 
     public static String[] CommandAliases = new String[] {"wh"};
 
@@ -43,7 +50,7 @@ public class CommandWarehouse {
                 .executes(ctx -> {
                     CommandSender sender = ctx.getSource().getSender();
                     queueManager.addPlayer((Player) ctx.getSource().getSender());
-                    sender.sendMessage(MiniUtil.format("<green>Joined warehouse!"));
+                    sender.sendMessage(MiniUtil.format(messageManager.getMessage("joined-warehouse")));
                     return Command.SINGLE_SUCCESS;
                 })
             )
@@ -52,7 +59,7 @@ public class CommandWarehouse {
                 .executes(ctx -> {
                     CommandSender sender = ctx.getSource().getSender();
                     queueManager.removePlayer((Player) ctx.getSource().getSender());
-                    sender.sendMessage(MiniUtil.format("<green>Left warehouse!"));
+                    sender.sendMessage(MiniUtil.format(messageManager.getMessage("left-warehouse")));
                     return Command.SINGLE_SUCCESS;
                 })
             )
@@ -64,7 +71,7 @@ public class CommandWarehouse {
                     .executes(ctx -> {
                         queueManager.addPlayer(ctx.getArgument("player", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst());
                         CommandSender sender = ctx.getSource().getSender();
-                        sender.sendMessage(MiniUtil.format("<green>Added player to warehouse queue"));
+                        sender.sendMessage(MiniUtil.format(messageManager.getMessage("added-to-warehouse")));
                         return Command.SINGLE_SUCCESS;
                     })
                 )
@@ -75,7 +82,7 @@ public class CommandWarehouse {
                     .executes(ctx -> {
                         queueManager.removePlayer(ctx.getArgument("player", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst());
                         CommandSender sender = ctx.getSource().getSender();
-                        sender.sendMessage(MiniUtil.format("<green>kicked player from warehouse queue"));
+                        sender.sendMessage(MiniUtil.format(messageManager.getMessage("kicked-from-warehouse")));
                         return Command.SINGLE_SUCCESS;
                     })
                 )
@@ -89,7 +96,7 @@ public class CommandWarehouse {
                         .executes(ctx -> {
                             warehouseManager.create(ctx.getArgument("name", String.class), ctx.getArgument("capacity", Integer.class));
                             CommandSender sender = ctx.getSource().getSender();
-                            sender.sendMessage(MiniUtil.format("<green>Created warehouse..."));
+                            sender.sendMessage(MiniUtil.format(messageManager.getMessage("created-warehouse")));
                             return Command.SINGLE_SUCCESS;
                         })
                     )
@@ -101,7 +108,7 @@ public class CommandWarehouse {
                     .executes(ctx -> {
                         warehouseManager.edit(ctx.getArgument("name", String.class));
                         CommandSender sender = ctx.getSource().getSender();
-                        sender.sendMessage(MiniUtil.format("<green>Opening warehouse editor..."));
+                        sender.sendMessage(MiniUtil.format(messageManager.getMessage("editing-warehouse")));
                         return Command.SINGLE_SUCCESS;
                     })
                 )
@@ -112,7 +119,7 @@ public class CommandWarehouse {
                     .executes(ctx -> {
                         warehouseManager.delete(ctx.getArgument("name", String.class));
                         CommandSender sender = ctx.getSource().getSender();
-                        sender.sendMessage(MiniUtil.format("<green>Deleted warehouse..."));
+                        sender.sendMessage(MiniUtil.format(messageManager.getMessage("deleted-warehouse")));
                         return Command.SINGLE_SUCCESS;
                     })
                 )
@@ -122,7 +129,7 @@ public class CommandWarehouse {
                 .executes(ctx -> {
                     warehouseManager.start();
                     CommandSender sender = ctx.getSource().getSender();
-                    sender.sendMessage(MiniUtil.format("<green>Starting warehouse..."));
+                    sender.sendMessage(MiniUtil.format(messageManager.getMessage("started-warehouse")));
                     return Command.SINGLE_SUCCESS;
                 })
             )
@@ -131,7 +138,7 @@ public class CommandWarehouse {
                 .executes(ctx -> {
                     warehouseManager.stop();
                     CommandSender sender = ctx.getSource().getSender();
-                    sender.sendMessage(MiniUtil.format("<green>Stopping warehouse..."));
+                    sender.sendMessage(MiniUtil.format(messageManager.getMessage("stopped-warehouse")));
                     return Command.SINGLE_SUCCESS;
                 })
             )
@@ -140,7 +147,7 @@ public class CommandWarehouse {
                 .executes(ctx -> {
                     configManager.reload();
                     CommandSender sender = ctx.getSource().getSender();
-                    sender.sendMessage(MiniUtil.format("<green>Configuration reloaded..."));
+                    sender.sendMessage(MiniUtil.format(messageManager.getMessage("reloaded-configuration")));
                     return Command.SINGLE_SUCCESS;
                 })
             )

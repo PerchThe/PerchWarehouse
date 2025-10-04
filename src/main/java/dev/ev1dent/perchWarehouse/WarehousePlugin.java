@@ -1,17 +1,26 @@
 package dev.ev1dent.perchWarehouse;
 
+import dev.ev1dent.perchWarehouse.commands.CommandWarehouse;
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class WarehousePlugin extends JavaPlugin {
 
+    @SuppressWarnings("UnstableApiUsage")
+    @Override
+    public void onLoad() {
+        this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
+            event -> event.registrar().register(new CommandWarehouse().constructCommand(), "booster command")
+        );
+    }
+
     @Override
     public void onEnable() {
-        // Plugin startup logic
 
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+
     }
 }

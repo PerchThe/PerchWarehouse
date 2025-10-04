@@ -32,6 +32,8 @@ public class CommandWarehouse {
     WarehouseManager warehouseManager = new WarehouseManager();
     ConfigManager configManager = new ConfigManager();
 
+    public static String[] CommandAliases = new String[] {"wh"};
+
     public LiteralCommandNode<CommandSourceStack> constructCommand() {
         return Commands.literal("warehouse")
 

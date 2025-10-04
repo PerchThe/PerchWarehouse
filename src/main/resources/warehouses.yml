@@ -1,0 +1,21 @@
+small_warehouse:
+  count: 10
+  items:
+    '1': shulker_box{example}
+    '2': pink_shulker_box{example}
+medium_warehouse:
+  count: 20
+  items:
+    '1': shulker_box{example}
+    '2': pink_shulker_box{example}
+    '3': white_shulker_box
+    '4': green_shulker_box
+large_warehouse:
+  count: 30
+  items:
+    '1': shulker_box{example}
+    '2': pink_shulker_box{example}
+    '3': white_shulker_box
+    '4': green_shulker_box
+    '5': shulker_box{example}
+    '6': pink_shulker_box{example}

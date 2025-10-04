@@ -6,52 +6,63 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.logging.Level;
 
 public class MessageManager {
 
-    private WarehousePlugin plugin;
-    private File messageFile;
-    private FileConfiguration config;
+    private final WarehousePlugin plugin;
+    private FileConfiguration dataConfig = null;
+    private File configFile = null;
 
     public MessageManager(WarehousePlugin plugin) {
         this.plugin = plugin;
-        this.messageFile = new File(plugin.getDataFolder(), "messages.yml");
-        loadConfig();
+       saveDefaultConfig();
     }
 
-    public void reload() {
-        if (!messageFile.exists()) {
-            plugin.saveDefaultConfig();
-        }
-        config = YamlConfiguration.loadConfiguration(messageFile);
-    }
+    public void reloadConfig() {
+        if (this.configFile == null)
+            this.configFile = new File(this.plugin.getDataFolder(), "messages.yml");
 
-    public void save() {
-        try {
-            config.save(messageFile);
-        } catch (IOException e) {
-            plugin.getLogger().log(Level.SEVERE, "Could not save message file", e);
+        this.dataConfig = YamlConfiguration.loadConfiguration(this.configFile);
+
+        InputStream defaultStream = this.plugin.getResource("messages.yml");
+        if (defaultStream != null) {
+            YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream));
+            this.dataConfig.setDefaults(defaultConfig);
         }
     }
 
     public FileConfiguration getConfig() {
-        if (config == null) {
-            reload();
-        }
-        return config;
+        if (this.dataConfig == null)
+            reloadConfig();
+
+        return this.dataConfig;
     }
 
-    private void loadConfig() {
-        if (!messageFile.exists()) {
-            messageFile.getParentFile().mkdirs();
-            plugin.saveDefaultConfig();
+    public void saveConfig() {
+        if (this.dataConfig == null || this.configFile == null)
+            return;
+
+        try {
+            this.getConfig().save(this.configFile);
+        } catch (IOException e) {
+            plugin.getLogger().log(Level.SEVERE, "Could not save config to " + this.configFile, e);
         }
-        config = YamlConfiguration.loadConfiguration(messageFile);
+    }
+
+    public void saveDefaultConfig() {
+        if (this.configFile == null)
+            this.configFile = new File(this.plugin.getDataFolder(), "messages.yml");
+
+        if (!this.configFile.exists()) {
+            this.plugin.saveResource("messages.yml", false);
+        }
     }
 
     public String getMessage(String key) {
         return getConfig().getString(key);
     }
-
 }
+

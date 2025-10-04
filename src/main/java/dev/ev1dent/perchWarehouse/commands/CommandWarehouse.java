@@ -134,6 +134,7 @@ public class CommandWarehouse {
             .then(Commands.literal("reload")
                 .requires(source -> source.getSender().hasPermission("warehouse.reload"))
                 .executes(ctx -> {
+                    messageManager.reloadConfig();
                     configManager.reload();
                     CommandSender sender = ctx.getSource().getSender();
                     sender.sendMessage(MiniUtil.format(messageManager.getMessage("reloaded-configuration")));

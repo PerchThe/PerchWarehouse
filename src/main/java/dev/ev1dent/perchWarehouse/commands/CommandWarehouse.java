@@ -117,6 +117,24 @@ public class CommandWarehouse {
                     })
                 )
             )
+            .then(Commands.literal("forcestart")
+                .requires(source -> source.getSender().hasPermission("warehouse.forcestart"))
+                .executes(ctx -> {
+                    warehouseManager.start();
+                    CommandSender sender = ctx.getSource().getSender();
+                    sender.sendMessage(MiniUtil.format("<green>Starting warehouse..."));
+                    return Command.SINGLE_SUCCESS;
+                })
+            )
+            .then(Commands.literal("forcestop")
+                .requires(source -> source.getSender().hasPermission("warehouse.forcestop"))
+                .executes(ctx -> {
+                    warehouseManager.stop();
+                    CommandSender sender = ctx.getSource().getSender();
+                    sender.sendMessage(MiniUtil.format("<green>Starting warehouse..."));
+                    return Command.SINGLE_SUCCESS;
+                })
+            )
             .then(Commands.literal("reload")
                 .requires(source -> source.getSender().hasPermission("warehouse.reload"))
                 .executes(ctx -> {

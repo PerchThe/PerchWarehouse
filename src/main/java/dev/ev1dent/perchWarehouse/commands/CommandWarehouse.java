@@ -83,18 +83,19 @@ public class CommandWarehouse {
             .then(Commands.literal("create")
                 .requires(source -> source.getSender().hasPermission("warehouse.create"))
                 .then(Commands.argument("name", StringArgumentType.string())
-                    .then(Commands.argument("capacity", IntegerArgumentType.integer()))
-                    .executes(ctx -> {
-                        warehouseManager.create(ctx.getArgument("name", String.class), ctx.getArgument("capacity", Integer.class));
-                        CommandSender sender = ctx.getSource().getSender();
-                        sender.sendMessage(MiniUtil.format("<green>Created warehouse..."));
-                        return Command.SINGLE_SUCCESS;
-                    })
+                    .then(Commands.argument("capacity", IntegerArgumentType.integer())
+                        .executes(ctx -> {
+                            warehouseManager.create(ctx.getArgument("name", String.class), ctx.getArgument("capacity", Integer.class));
+                            CommandSender sender = ctx.getSource().getSender();
+                            sender.sendMessage(MiniUtil.format("<green>Created warehouse..."));
+                            return Command.SINGLE_SUCCESS;
+                        })
+                    )
                 )
             )
             .then(Commands.literal("edit")
                 .requires(source -> source.getSender().hasPermission("warehouse.edit"))
-                .then(Commands.argument("player", ArgumentTypes.player())
+                .then(Commands.argument("name", StringArgumentType.string())
                     .executes(ctx -> {
                         warehouseManager.edit(ctx.getArgument("name", String.class));
                         CommandSender sender = ctx.getSource().getSender();

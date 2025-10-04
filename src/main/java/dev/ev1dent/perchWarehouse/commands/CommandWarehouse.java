@@ -131,7 +131,7 @@ public class CommandWarehouse {
                 .executes(ctx -> {
                     warehouseManager.stop();
                     CommandSender sender = ctx.getSource().getSender();
-                    sender.sendMessage(MiniUtil.format("<green>Starting warehouse..."));
+                    sender.sendMessage(MiniUtil.format("<green>Stopping warehouse..."));
                     return Command.SINGLE_SUCCESS;
                 })
             )

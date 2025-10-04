@@ -69,13 +69,13 @@ public class CommandWarehouse {
                     })
                 )
             )
-            .then(Commands.literal("remove")
-                .requires(source -> source.getSender().hasPermission("warehouse.remove"))
+            .then(Commands.literal("kick")
+                .requires(source -> source.getSender().hasPermission("warehouse.kick"))
                 .then(Commands.argument("player", ArgumentTypes.player())
                     .executes(ctx -> {
                         queueManager.removePlayer(ctx.getArgument("player", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst());
                         CommandSender sender = ctx.getSource().getSender();
-                        sender.sendMessage(MiniUtil.format("<green>Removed player from warehouse queue"));
+                        sender.sendMessage(MiniUtil.format("<green>kicked player from warehouse queue"));
                         return Command.SINGLE_SUCCESS;
                     })
                 )

@@ -1,6 +1,7 @@
 package dev.ev1dent.perchWarehouse.commands;
 
 import com.mojang.brigadier.Command;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import dev.ev1dent.perchWarehouse.managers.ConfigManager;
@@ -82,21 +83,11 @@ public class CommandWarehouse {
             .then(Commands.literal("create")
                 .requires(source -> source.getSender().hasPermission("warehouse.create"))
                 .then(Commands.argument("name", StringArgumentType.string())
+                    .then(Commands.argument("capacity", IntegerArgumentType.integer()))
                     .executes(ctx -> {
-                        warehouseManager.create(ctx.getArgument("name", String.class));
+                        warehouseManager.create(ctx.getArgument("name", String.class), ctx.getArgument("capacity", Integer.class));
                         CommandSender sender = ctx.getSource().getSender();
                         sender.sendMessage(MiniUtil.format("<green>Created warehouse..."));
-                        return Command.SINGLE_SUCCESS;
-                    })
-                )
-            )
-            .then(Commands.literal("delete")
-                .requires(source -> source.getSender().hasPermission("warehouse.delete"))
-                .then(Commands.argument("name", StringArgumentType.string())
-                    .executes(ctx -> {
-                        warehouseManager.delete(ctx.getArgument("name", String.class));
-                        CommandSender sender = ctx.getSource().getSender();
-                        sender.sendMessage(MiniUtil.format("<green>Deleted warehouse..."));
                         return Command.SINGLE_SUCCESS;
                     })
                 )
@@ -108,6 +99,17 @@ public class CommandWarehouse {
                         warehouseManager.edit(ctx.getArgument("name", String.class));
                         CommandSender sender = ctx.getSource().getSender();
                         sender.sendMessage(MiniUtil.format("<green>Opening warehouse editor..."));
+                        return Command.SINGLE_SUCCESS;
+                    })
+                )
+            )
+            .then(Commands.literal("delete")
+                .requires(source -> source.getSender().hasPermission("warehouse.delete"))
+                .then(Commands.argument("name", StringArgumentType.string())
+                    .executes(ctx -> {
+                        warehouseManager.delete(ctx.getArgument("name", String.class));
+                        CommandSender sender = ctx.getSource().getSender();
+                        sender.sendMessage(MiniUtil.format("<green>Deleted warehouse..."));
                         return Command.SINGLE_SUCCESS;
                     })
                 )

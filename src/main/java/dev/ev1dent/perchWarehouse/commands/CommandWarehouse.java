@@ -17,17 +17,6 @@ import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSele
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-/*
-/warehouse join - everyone (done)
-/warehouse leave - everyone (done)
-
-/warehouse add <name> - moderator (done)
-/warehouse remove <name> - moderator (done)
-
-/warehouse create <name> <player count> - admin
-/warehouse edit <name> - admin
-/warehouse reload - admin
- */
 public class CommandWarehouse {
 
     private WarehousePlugin plugin(){

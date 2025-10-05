@@ -1,4 +1,4 @@
-package dev.ev1dent.perchWarehouse.configuration;
+package dev.ev1dent.perchWarehouse.managers;
 
 import dev.ev1dent.perchWarehouse.WarehousePlugin;
 import org.bukkit.configuration.file.FileConfiguration;

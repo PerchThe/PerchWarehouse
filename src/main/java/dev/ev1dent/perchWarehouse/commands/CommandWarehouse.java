@@ -5,7 +5,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import dev.ev1dent.perchWarehouse.WarehousePlugin;
-import dev.ev1dent.perchWarehouse.configuration.MessageManager;
+import dev.ev1dent.perchWarehouse.managers.MessageManager;
 import dev.ev1dent.perchWarehouse.managers.ConfigManager;
 import dev.ev1dent.perchWarehouse.managers.QueueManager;
 import dev.ev1dent.perchWarehouse.managers.TierManager;

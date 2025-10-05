@@ -41,17 +41,6 @@ public class MessageManager {
         return this.dataConfig;
     }
 
-    public void saveConfig() {
-        if (this.dataConfig == null || this.configFile == null)
-            return;
-
-        try {
-            this.getConfig().save(this.configFile);
-        } catch (IOException e) {
-            plugin.getLogger().log(Level.SEVERE, "Could not save config to " + this.configFile, e);
-        }
-    }
-
     public void saveDefaultConfig() {
         if (this.configFile == null)
             this.configFile = new File(this.plugin.getDataFolder(), "messages.yml");

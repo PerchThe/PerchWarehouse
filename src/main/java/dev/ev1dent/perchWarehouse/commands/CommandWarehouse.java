@@ -6,7 +6,6 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import dev.ev1dent.perchWarehouse.WarehousePlugin;
 import dev.ev1dent.perchWarehouse.managers.MessageManager;
-import dev.ev1dent.perchWarehouse.managers.ConfigManager;
 import dev.ev1dent.perchWarehouse.managers.QueueManager;
 import dev.ev1dent.perchWarehouse.managers.TierManager;
 import dev.ev1dent.perchWarehouse.managers.WarehouseManager;
@@ -24,7 +23,6 @@ public class CommandWarehouse {
         return WarehousePlugin.getPlugin(WarehousePlugin.class);
     }
 
-    ConfigManager configManager = new ConfigManager();
     MessageManager messageManager = new MessageManager(plugin());
     WarehouseManager warehouseManager = new WarehouseManager();
     QueueManager queueManager = new QueueManager();
@@ -139,7 +137,7 @@ public class CommandWarehouse {
                 .requires(source -> source.getSender().hasPermission("warehouse.reload"))
                 .executes(ctx -> {
                     messageManager.reloadConfig();
-                    configManager.reload();
+                    tierManager.reload();
                     CommandSender sender = ctx.getSource().getSender();
                     sender.sendMessage(MiniUtil.format(messageManager.getMessage("reloaded-configuration")));
                     return Command.SINGLE_SUCCESS;

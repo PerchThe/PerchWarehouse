@@ -19,16 +19,16 @@ import org.bukkit.entity.Player;
 
 public class CommandWarehouse {
 
-    private WarehousePlugin plugin(){
+    private WarehousePlugin warehousePlugin(){
         return WarehousePlugin.getPlugin(WarehousePlugin.class);
     }
 
-    MessageManager messageManager = new MessageManager(plugin());
+    MessageManager messageManager = new MessageManager(warehousePlugin());
     WarehouseManager warehouseManager = new WarehouseManager();
-    QueueManager queueManager = new QueueManager();
+    QueueManager queueManager = warehousePlugin().getQueueManager();
 
     //TEMP
-    TierManager tierManager = new TierManager(plugin());
+    TierManager tierManager = new TierManager(warehousePlugin());
 
     public static String[] CommandAliases = new String[] {"wh"};
 
@@ -142,16 +142,6 @@ public class CommandWarehouse {
                     sender.sendMessage(MiniUtil.format(messageManager.getMessage("reloaded-configuration")));
                     return Command.SINGLE_SUCCESS;
                 })
-            )
-            .then(Commands.literal("test")
-                .requires(source -> source.getSender().hasPermission("warehouse.test"))
-                    .then(Commands.argument("count", IntegerArgumentType.integer())
-                    .executes(ctx -> {
-                        CommandSender sender = ctx.getSource().getSender();
-                        sender.sendMessage(MiniUtil.format(tierManager.getTierForPlayerCount(ctx.getArgument("count", Integer.class))));
-                        return Command.SINGLE_SUCCESS;
-                    })
-                )
             )
             .build();
     }

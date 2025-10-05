@@ -2,14 +2,48 @@ package dev.ev1dent.perchWarehouse.managers;
 
 import org.bukkit.entity.Player;
 
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.UUID;
+
 public class QueueManager {
 
+    private final Queue<UUID> playerQueue;
+
+    public QueueManager() {
+        this.playerQueue = new LinkedList<>();
+    }
+
     public void addPlayer(Player player) {
-        System.out.println("ADDPLAYER DOESN'T DO ANYTHING YET");
+        System.out.println("attempting to add player to the queue");
+        UUID playerUUID = player.getUniqueId();
+        if(isQueued(player)) return;
+        playerQueue.add(playerUUID);
+
     }
 
     public void removePlayer(Player player) {
-        System.out.println("REMOVEPLAYER DOESN'T DO ANYTHING YET");
+        System.out.println("removing player from the queue");
+        UUID playerUUID = player.getUniqueId();
+        if(!isQueued(player)) return;
+        playerQueue.remove(playerUUID);
+    }
+
+    public boolean isQueued(Player player) {
+        return playerQueue.contains(player.getUniqueId());
+    }
+
+    public int getQueueSize() {
+        return playerQueue.size();
+    }
+
+    public void clearQueue() {
+        playerQueue.clear();
+    }
+
+
+    public LinkedList<UUID> getPlayersInQueue() {
+        return new LinkedList<>(playerQueue);
     }
 
 }

@@ -19,7 +19,6 @@ public class QueueManager {
         UUID playerUUID = player.getUniqueId();
         if(isQueued(player)) return;
         playerQueue.add(playerUUID);
-
     }
 
     public void removePlayer(Player player) {

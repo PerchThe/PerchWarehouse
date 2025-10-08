@@ -60,9 +60,10 @@ public class CommandWarehouse {
                 .requires(source -> source.getSender().hasPermission("warehouse.add"))
                 .then(Commands.argument("player", ArgumentTypes.player())
                     .executes(ctx -> {
-                        queueManager.addPlayer(ctx.getArgument("player", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst());
+                        Player player = ctx.getArgument("player", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst();
+                        queueManager.addPlayer(player);
                         CommandSender sender = ctx.getSource().getSender();
-                        sender.sendMessage(MiniUtil.format(messageManager.getMessage("added-to-warehouse")));
+                        sender.sendMessage(MiniUtil.format(messageManager.getMessage("added-to-warehouse").replace("%player%", player.getName())));
                         return Command.SINGLE_SUCCESS;
                     })
                 )
@@ -71,9 +72,10 @@ public class CommandWarehouse {
                 .requires(source -> source.getSender().hasPermission("warehouse.kick"))
                 .then(Commands.argument("player", ArgumentTypes.player())
                     .executes(ctx -> {
-                        queueManager.removePlayer(ctx.getArgument("player", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst());
+                        Player player = ctx.getArgument("player", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst();
+                        queueManager.addPlayer(player);
                         CommandSender sender = ctx.getSource().getSender();
-                        sender.sendMessage(MiniUtil.format(messageManager.getMessage("kicked-from-warehouse")));
+                        sender.sendMessage(MiniUtil.format(messageManager.getMessage("kicked-from-warehouse").replace("%player%", player.getName())));
                         return Command.SINGLE_SUCCESS;
                     })
                 )

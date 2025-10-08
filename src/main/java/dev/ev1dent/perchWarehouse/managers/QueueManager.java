@@ -1,5 +1,6 @@
 package dev.ev1dent.perchWarehouse.managers;
 
+import dev.ev1dent.perchWarehouse.utilities.LoggerUtil;
 import org.bukkit.entity.Player;
 
 import java.util.LinkedList;
@@ -15,14 +16,14 @@ public class QueueManager {
     }
 
     public void addPlayer(Player player) {
-        System.out.println("attempting to add player to the queue");
+        LoggerUtil.debug("attempting to add player to the queue");
         UUID playerUUID = player.getUniqueId();
         if(isQueued(player)) return;
         playerQueue.add(playerUUID);
     }
 
     public void removePlayer(Player player) {
-        System.out.println("removing player from the queue");
+        LoggerUtil.debug("removing player from the queue");
         UUID playerUUID = player.getUniqueId();
         if(!isQueued(player)) return;
         playerQueue.remove(playerUUID);

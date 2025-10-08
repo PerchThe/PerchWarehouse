@@ -1,6 +1,7 @@
 package dev.ev1dent.perchWarehouse.managers;
 
 import dev.ev1dent.perchWarehouse.WarehousePlugin;
+import dev.ev1dent.perchWarehouse.utilities.LoggerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -13,25 +14,25 @@ public class WarehouseManager {
     QueueManager queueManager = warehousePlugin().getQueueManager();
 
     public void create(String name, int capacity) {
-        System.out.println("WarehouseManager.create() " + name + " " + capacity);
+        LoggerUtil.debug("WarehouseManager.create() " + name + " " + capacity);
     }
 
     public void edit(String name){
-        System.out.println("WarehouseManager.edit() " + name);
+        LoggerUtil.debug("WarehouseManager.edit() " + name);
     }
 
     public void delete(String name){
-        System.out.println("WarehouseManager.delete() "+ name);
+        LoggerUtil.debug("WarehouseManager.delete() "+ name);
     }
 
     public void start(){
-        System.out.println("WarehouseManager.start()");
+        LoggerUtil.debug("WarehouseManager.start()");
         teleportPlayers();
 
     }
 
     public void stop(){
-        System.out.println("WarehouseManager.stop()");
+        LoggerUtil.debug("WarehouseManager.stop()");
     }
 
     private void teleportPlayers(){

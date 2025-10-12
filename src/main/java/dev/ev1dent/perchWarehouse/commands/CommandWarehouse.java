@@ -26,8 +26,6 @@ public class CommandWarehouse {
     MessageManager messageManager = new MessageManager(warehousePlugin());
     WarehouseManager warehouseManager = new WarehouseManager();
     QueueManager queueManager = warehousePlugin().getQueueManager();
-
-    //TEMP
     TierManager tierManager = new TierManager(warehousePlugin());
 
     public static String[] CommandAliases = new String[] {"wh"};

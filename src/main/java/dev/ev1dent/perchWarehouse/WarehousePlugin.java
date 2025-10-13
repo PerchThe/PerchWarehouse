@@ -1,11 +1,12 @@
 package dev.ev1dent.perchWarehouse;
 
 import dev.ev1dent.perchWarehouse.commands.CommandWarehouse;
+import dev.ev1dent.perchWarehouse.configuration.ConfigManager;
 import dev.ev1dent.perchWarehouse.managers.QueueManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.List;
+import java.util.Collection;
 
 public final class WarehousePlugin extends JavaPlugin {
 
@@ -13,12 +14,13 @@ public final class WarehousePlugin extends JavaPlugin {
     public QueueManager getQueueManager() {
         return queueManager;
     }
+    ConfigManager configManager = new ConfigManager(this);
 
     @SuppressWarnings("UnstableApiUsage")
     @Override
     public void onLoad() {
         this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS,
-            event -> event.registrar().register(new CommandWarehouse().constructCommand(), "booster command", List.of(CommandWarehouse.CommandAliases))
+            event -> event.registrar().register(new CommandWarehouse().constructCommand(), "booster command", (Collection<String>) configManager.getList("aliases"))
         );
     }
 

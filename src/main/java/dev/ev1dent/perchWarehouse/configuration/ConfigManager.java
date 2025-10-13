@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class ConfigManager {
 
@@ -54,5 +55,10 @@ public class ConfigManager {
 
     public boolean getBoolean(String value){
         return getConfig().getBoolean(value);
+    }
+
+    public List<?> getList(String key){
+        return getConfig().getList(key);
+
     }
 }

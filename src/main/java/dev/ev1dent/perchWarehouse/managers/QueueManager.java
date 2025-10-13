@@ -22,7 +22,7 @@ public class QueueManager {
         if(!isOpened){
             throw new QueueClosedException(player);
         }
-        LoggerUtil.debug("adding" + player.getName() + " to the queue");
+        LoggerUtil.debug("adding " + player.getName() + " to the queue");
         UUID playerUUID = player.getUniqueId();
         if(isQueued(player)) return;
         playerQueue.add(playerUUID);

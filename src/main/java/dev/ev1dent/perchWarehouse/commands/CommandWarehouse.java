@@ -97,9 +97,11 @@ public class CommandWarehouse {
             //administrator commands
             .then(Commands.literal("startevent")
                 .requires(source -> source.getSender().hasPermission("warehouse.startevent"))
-                    .then(Commands.argument("staging_time", IntegerArgumentType.integer())
+                    .then(Commands.argument("staging_time (minutes)", IntegerArgumentType.integer())
                     .executes(ctx -> {
-                        warehouseManager.openRegistration(ctx.getArgument("staging_time", Integer.class));
+                        int stagingTime = ctx.getArgument("staging_time (minutes)", Integer.class);
+                        warehouseManager.openRegistration(stagingTime);
+                        ctx.getSource().getSender().sendMessage(MiniUtil.format(messageManager.getMessage("starting-event").replace("%time%", String.valueOf(stagingTime))));
                         return Command.SINGLE_SUCCESS;
                     })
                 )

@@ -1,6 +1,7 @@
 package dev.ev1dent.perchWarehouse.managers;
 
 import dev.ev1dent.perchWarehouse.WarehousePlugin;
+import dev.ev1dent.perchWarehouse.configuration.TierManager;
 import dev.ev1dent.perchWarehouse.utilities.LoggerUtil;
 import dev.ev1dent.perchWarehouse.utilities.TaskChain;
 import org.bukkit.Bukkit;
@@ -13,6 +14,7 @@ public class WarehouseManager {
         return WarehousePlugin.getPlugin(WarehousePlugin.class);
     }
     QueueManager queueManager = warehousePlugin().getQueueManager();
+    TierManager tierManager = new TierManager(warehousePlugin());
 
     public void create(String name, int capacity) {
         LoggerUtil.debug("WarehouseManager.create() " + name + " " + capacity);
@@ -33,20 +35,28 @@ public class WarehouseManager {
 
             @Override
             protected void run() {
+                if (queueManager.isOpened) {
+                    start();
+                }
                 queueManager.isOpened = false;
-                start();
+                queueManager.clearQueue();
             }
         }).execute();
     }
 
     public void start(){
         LoggerUtil.debug("Starting warehouse.");
+        LoggerUtil.debug("Checking Warehouse Tier");
+        String warehouseTier = tierManager.getTierForPlayerCount(queueManager.getQueueSize());
+        LoggerUtil.debug("Warehouse Tier is " + warehouseTier + queueManager.getQueueSize() + " players");
+        //TODO get configuration for warehouseTier and continue
         teleportPlayers();
         LoggerUtil.debug("Closing Queue");
         queueManager.isOpened = false;
     }
 
     public void stop(){
+        queueManager.isOpened = false;
         LoggerUtil.debug("WarehouseManager.stop()");
         //TODO teleport all players to their back location
         queueManager.clearQueue();

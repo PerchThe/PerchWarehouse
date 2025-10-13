@@ -80,7 +80,7 @@ public class CommandWarehouse {
                 .then(Commands.argument("player", ArgumentTypes.player())
                     .executes(ctx -> {
                         Player player = ctx.getArgument("player", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst();
-                        queueManager.addPlayer(player);
+                        queueManager.removePlayer(player);
                         CommandSender sender = ctx.getSource().getSender();
                         sender.sendMessage(MiniUtil.format(messageManager.getMessage("kicked-from-warehouse").replace("%player%", player.getName())));
                         return Command.SINGLE_SUCCESS;

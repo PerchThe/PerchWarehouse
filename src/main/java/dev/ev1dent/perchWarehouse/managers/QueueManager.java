@@ -20,7 +20,7 @@ public class QueueManager {
 
     public void addPlayer(Player player) throws QueueClosedException {
         if(!isOpened){
-            throw new QueueClosedException(player, "test");
+            throw new QueueClosedException(player);
         }
         LoggerUtil.debug("adding" + player.getName() + " to the queue");
         UUID playerUUID = player.getUniqueId();
@@ -28,7 +28,10 @@ public class QueueManager {
         playerQueue.add(playerUUID);
     }
 
-    public void removePlayer(Player player) {
+    public void removePlayer(Player player) throws QueueClosedException {
+        if(!isOpened){
+            throw new QueueClosedException(player);
+        }
         LoggerUtil.debug("removing " + player.getName() + " from the queue");
         UUID playerUUID = player.getUniqueId();
         if(!isQueued(player)) return;

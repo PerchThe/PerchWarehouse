@@ -40,7 +40,6 @@ public class CommandWarehouse {
                     try {
                         queueManager.addPlayer((Player) ctx.getSource().getSender());
                     } catch (QueueClosedException e) {
-                        sender.sendMessage(MiniUtil.format(messageManager.getMessage("queue-closed")));
                         return Command.SINGLE_SUCCESS;
                     }
                     sender.sendMessage(MiniUtil.format(messageManager.getMessage("joined-warehouse")));
@@ -51,7 +50,11 @@ public class CommandWarehouse {
                 .requires(source -> source.getSender().hasPermission("warehouse.leave"))
                 .executes(ctx -> {
                     CommandSender sender = ctx.getSource().getSender();
-                    queueManager.removePlayer((Player) ctx.getSource().getSender());
+                    try {
+                        queueManager.removePlayer((Player) ctx.getSource().getSender());
+                    } catch (QueueClosedException e) {
+                        return Command.SINGLE_SUCCESS;
+                    }
                     sender.sendMessage(MiniUtil.format(messageManager.getMessage("left-warehouse")));
                     return Command.SINGLE_SUCCESS;
                 })
@@ -66,7 +69,6 @@ public class CommandWarehouse {
                         try {
                             queueManager.addPlayer(player);
                         } catch (QueueClosedException e) {
-                            player.sendMessage(MiniUtil.format(messageManager.getMessage("queue-closed")));
                             return Command.SINGLE_SUCCESS;
                         }
                         CommandSender sender = ctx.getSource().getSender();
@@ -80,7 +82,11 @@ public class CommandWarehouse {
                 .then(Commands.argument("player", ArgumentTypes.player())
                     .executes(ctx -> {
                         Player player = ctx.getArgument("player", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst();
-                        queueManager.removePlayer(player);
+                        try {
+                            queueManager.removePlayer((Player) ctx.getSource().getSender());
+                        } catch (QueueClosedException e) {
+                            return Command.SINGLE_SUCCESS;
+                        }
                         CommandSender sender = ctx.getSource().getSender();
                         sender.sendMessage(MiniUtil.format(messageManager.getMessage("kicked-from-warehouse").replace("%player%", player.getName())));
                         return Command.SINGLE_SUCCESS;

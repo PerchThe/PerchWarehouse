@@ -6,6 +6,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import dev.ev1dent.perchWarehouse.WarehousePlugin;
 import dev.ev1dent.perchWarehouse.configuration.MessageManager;
+import dev.ev1dent.perchWarehouse.exceptions.QueueClosedException;
 import dev.ev1dent.perchWarehouse.managers.QueueManager;
 import dev.ev1dent.perchWarehouse.configuration.TierManager;
 import dev.ev1dent.perchWarehouse.managers.WarehouseManager;
@@ -38,7 +39,12 @@ public class CommandWarehouse {
                 .requires(source -> source.getSender().hasPermission("warehouse.join"))
                 .executes(ctx -> {
                     CommandSender sender = ctx.getSource().getSender();
-                    queueManager.addPlayer((Player) ctx.getSource().getSender());
+                    try {
+                        queueManager.addPlayer((Player) ctx.getSource().getSender());
+                    } catch (QueueClosedException e) {
+                        sender.sendMessage(MiniUtil.format(messageManager.getMessage("queue-closed")));
+                        return Command.SINGLE_SUCCESS;
+                    }
                     sender.sendMessage(MiniUtil.format(messageManager.getMessage("joined-warehouse")));
                     return Command.SINGLE_SUCCESS;
                 })
@@ -59,7 +65,12 @@ public class CommandWarehouse {
                 .then(Commands.argument("player", ArgumentTypes.player())
                     .executes(ctx -> {
                         Player player = ctx.getArgument("player", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst();
-                        queueManager.addPlayer(player);
+                        try {
+                            queueManager.addPlayer(player);
+                        } catch (QueueClosedException e) {
+                            player.sendMessage(MiniUtil.format(messageManager.getMessage("queue-closed")));
+                            return Command.SINGLE_SUCCESS;
+                        }
                         CommandSender sender = ctx.getSource().getSender();
                         sender.sendMessage(MiniUtil.format(messageManager.getMessage("added-to-warehouse").replace("%player%", player.getName())));
                         return Command.SINGLE_SUCCESS;

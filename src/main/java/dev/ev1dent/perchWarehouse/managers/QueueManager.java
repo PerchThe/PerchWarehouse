@@ -1,5 +1,6 @@
 package dev.ev1dent.perchWarehouse.managers;
 
+import dev.ev1dent.perchWarehouse.exceptions.QueueClosedException;
 import dev.ev1dent.perchWarehouse.utilities.LoggerUtil;
 import org.bukkit.entity.Player;
 
@@ -15,7 +16,10 @@ public class QueueManager {
         this.playerQueue = new LinkedList<>();
     }
 
-    public void addPlayer(Player player) {
+    public void addPlayer(Player player) throws QueueClosedException {
+        if(!isOpened){
+            throw new QueueClosedException(player, "test");
+        }
         LoggerUtil.debug("adding" + player.getName() + " to the queue");
         UUID playerUUID = player.getUniqueId();
         if(isQueued(player)) return;

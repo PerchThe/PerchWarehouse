@@ -29,8 +29,6 @@ public class CommandWarehouse {
     QueueManager queueManager = warehousePlugin().getQueueManager();
     TierManager tierManager = new TierManager(warehousePlugin());
 
-    public static String[] CommandAliases = new String[] {"wh"};
-
     public LiteralCommandNode<CommandSourceStack> constructCommand() {
         return Commands.literal("warehouse")
 

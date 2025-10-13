@@ -95,6 +95,15 @@ public class CommandWarehouse {
             )
 
             //administrator commands
+            .then(Commands.literal("startevent")
+                .requires(source -> source.getSender().hasPermission("warehouse.startevent"))
+                    .then(Commands.argument("staging_time", IntegerArgumentType.integer())
+                    .executes(ctx -> {
+                        warehouseManager.openRegistration(ctx.getArgument("staging_time", Integer.class));
+                        return Command.SINGLE_SUCCESS;
+                    })
+                )
+            )
             .then(Commands.literal("create")
                 .requires(source -> source.getSender().hasPermission("warehouse.create"))
                 .then(Commands.argument("name", StringArgumentType.string())

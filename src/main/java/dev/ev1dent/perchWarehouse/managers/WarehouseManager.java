@@ -2,6 +2,7 @@ package dev.ev1dent.perchWarehouse.managers;
 
 import dev.ev1dent.perchWarehouse.WarehousePlugin;
 import dev.ev1dent.perchWarehouse.utilities.LoggerUtil;
+import dev.ev1dent.perchWarehouse.utilities.TaskChain;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -23,6 +24,18 @@ public class WarehouseManager {
 
     public void delete(String name){
         LoggerUtil.debug("WarehouseManager.delete() "+ name);
+    }
+
+    public void openRegistration(int time){
+        queueManager.isOpened = true;
+        TaskChain.newChain().delay(time).add(new TaskChain.GenericTask() {
+
+            @Override
+            protected void run() {
+                queueManager.isOpened = false;
+                start();
+            }
+        }).execute();
     }
 
     public void start(){

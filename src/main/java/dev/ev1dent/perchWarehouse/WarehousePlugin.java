@@ -2,6 +2,7 @@ package dev.ev1dent.perchWarehouse;
 
 import dev.ev1dent.perchWarehouse.commands.CommandWarehouse;
 import dev.ev1dent.perchWarehouse.configuration.ConfigManager;
+import dev.ev1dent.perchWarehouse.listeners.PlayerQuitListener;
 import dev.ev1dent.perchWarehouse.managers.QueueManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,10 +28,15 @@ public final class WarehousePlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         queueManager.isOpened = false;
+        registerEvents();
     }
 
     @Override
     public void onDisable() {
 
+    }
+
+    private void registerEvents() {
+        this.getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
     }
 }

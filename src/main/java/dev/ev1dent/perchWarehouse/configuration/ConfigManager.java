@@ -53,8 +53,8 @@ public class ConfigManager {
         return getConfig().getString(key);
     }
 
-    public boolean getBoolean(String value){
-        return getConfig().getBoolean(value);
+    public boolean getBoolean(String key){
+        return getConfig().getBoolean(key);
     }
 
     public List<?> getList(String key){

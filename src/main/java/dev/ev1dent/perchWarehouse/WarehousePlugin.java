@@ -26,7 +26,7 @@ public final class WarehousePlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
+        queueManager.isOpened = false;
     }
 
     @Override

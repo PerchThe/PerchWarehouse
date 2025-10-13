@@ -12,6 +12,8 @@ public class QueueManager {
 
     private final Queue<UUID> playerQueue;
 
+    public boolean isOpened;
+
     public QueueManager() {
         this.playerQueue = new LinkedList<>();
     }

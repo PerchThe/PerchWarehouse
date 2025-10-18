@@ -34,10 +34,8 @@ public class CommandWarehouse {
         return Commands.literal("warehouse")
 
             // default commands
-            .then(Commands.literal("join")
-                .requires(source -> source.getSender().hasPermission("warehouse.join"))
-                .then(new JoinSubcommand(warehousePlugin()).create())
-            )
+           .then(new JoinSubcommand(warehousePlugin()).create())
+
             .then(Commands.literal("leave")
                 .requires(source -> source.getSender().hasPermission("warehouse.leave"))
                 .executes(ctx -> {

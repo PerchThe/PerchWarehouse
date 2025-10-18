@@ -26,6 +26,7 @@ public class JoinSubcommand {
 
     public LiteralArgumentBuilder<CommandSourceStack> create() {
         return Commands.literal("join")
+            .requires(source -> source.getSender().hasPermission("warehouse.join"))
             .executes(ctx -> {
                 CommandSender sender = ctx.getSource().getSender();
                 try {

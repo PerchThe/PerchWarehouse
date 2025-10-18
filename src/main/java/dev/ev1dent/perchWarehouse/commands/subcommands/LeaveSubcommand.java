@@ -12,28 +12,28 @@ import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class JoinSubcommand {
+public class LeaveSubcommand {
 
     private final QueueManager queueManager;
     private final MessageManager messageManager;
 
 
-    public JoinSubcommand(WarehousePlugin warehousePlugin){
+    public LeaveSubcommand(WarehousePlugin warehousePlugin){
         this.queueManager = warehousePlugin.getQueueManager();
         this.messageManager = new MessageManager(warehousePlugin);
     }
 
     public LiteralArgumentBuilder<CommandSourceStack> create() {
-        return Commands.literal("join")
-            .requires(source -> source.getSender().hasPermission("warehouse.join"))
+       return Commands.literal("leave")
+            .requires(source -> source.getSender().hasPermission("warehouse.leave"))
             .executes(ctx -> {
                 CommandSender sender = ctx.getSource().getSender();
                 try {
-                    queueManager.addPlayer((Player) ctx.getSource().getSender());
+                    queueManager.removePlayer((Player) ctx.getSource().getSender());
                 } catch (QueueClosedException e) {
                     return Command.SINGLE_SUCCESS;
                 }
-                sender.sendMessage(MiniUtil.format(messageManager.getMessage("joined-warehouse")));
+                sender.sendMessage(MiniUtil.format(messageManager.getMessage("left-warehouse")));
                 return Command.SINGLE_SUCCESS;
             });
     }

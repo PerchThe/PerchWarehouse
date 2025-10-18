@@ -4,36 +4,30 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import dev.ev1dent.perchWarehouse.WarehousePlugin;
 import dev.ev1dent.perchWarehouse.configuration.MessageManager;
-import dev.ev1dent.perchWarehouse.exceptions.QueueClosedException;
-import dev.ev1dent.perchWarehouse.managers.QueueManager;
+import dev.ev1dent.perchWarehouse.managers.WarehouseManager;
 import dev.ev1dent.perchWarehouse.utilities.MiniUtil;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
-public class JoinSubcommand {
+public class ForceStartSubcommand {
 
-    private final QueueManager queueManager;
+    private final WarehouseManager warehouseManager;
     private final MessageManager messageManager;
 
 
-    public JoinSubcommand(WarehousePlugin warehousePlugin){
-        this.queueManager = warehousePlugin.getQueueManager();
+    public ForceStartSubcommand(WarehousePlugin warehousePlugin){
+        this.warehouseManager = new WarehouseManager();
         this.messageManager = new MessageManager(warehousePlugin);
     }
 
     public LiteralArgumentBuilder<CommandSourceStack> create() {
-        return Commands.literal("join")
-            .requires(source -> source.getSender().hasPermission("warehouse.join"))
+        return Commands.literal("forcestart")
+            .requires(source -> source.getSender().hasPermission("warehouse.forcestart"))
             .executes(ctx -> {
+                warehouseManager.start();
                 CommandSender sender = ctx.getSource().getSender();
-                try {
-                    queueManager.addPlayer((Player) ctx.getSource().getSender());
-                } catch (QueueClosedException e) {
-                    return Command.SINGLE_SUCCESS;
-                }
-                sender.sendMessage(MiniUtil.format(messageManager.getMessage("joined-warehouse")));
+                sender.sendMessage(MiniUtil.format(messageManager.getMessage("started-warehouse")));
                 return Command.SINGLE_SUCCESS;
             });
     }

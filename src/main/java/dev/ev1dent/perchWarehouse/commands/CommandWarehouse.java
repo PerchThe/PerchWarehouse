@@ -5,6 +5,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import dev.ev1dent.perchWarehouse.WarehousePlugin;
+import dev.ev1dent.perchWarehouse.commands.subcommands.JoinSubcommand;
 import dev.ev1dent.perchWarehouse.configuration.MessageManager;
 import dev.ev1dent.perchWarehouse.exceptions.QueueClosedException;
 import dev.ev1dent.perchWarehouse.managers.QueueManager;
@@ -35,16 +36,7 @@ public class CommandWarehouse {
             // default commands
             .then(Commands.literal("join")
                 .requires(source -> source.getSender().hasPermission("warehouse.join"))
-                .executes(ctx -> {
-                    CommandSender sender = ctx.getSource().getSender();
-                    try {
-                        queueManager.addPlayer((Player) ctx.getSource().getSender());
-                    } catch (QueueClosedException e) {
-                        return Command.SINGLE_SUCCESS;
-                    }
-                    sender.sendMessage(MiniUtil.format(messageManager.getMessage("joined-warehouse")));
-                    return Command.SINGLE_SUCCESS;
-                })
+                .then(new JoinSubcommand(warehousePlugin()).create())
             )
             .then(Commands.literal("leave")
                 .requires(source -> source.getSender().hasPermission("warehouse.leave"))

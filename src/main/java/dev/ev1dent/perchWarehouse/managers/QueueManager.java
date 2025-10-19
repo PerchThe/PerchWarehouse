@@ -11,7 +11,6 @@ import java.util.UUID;
 public class QueueManager {
 
     private final Queue<UUID> playerQueue;
-
     public boolean isOpened;
 
     public QueueManager() {

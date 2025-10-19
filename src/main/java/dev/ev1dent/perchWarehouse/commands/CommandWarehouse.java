@@ -12,7 +12,6 @@ public class CommandWarehouse {
         return WarehousePlugin.getPlugin(WarehousePlugin.class);
     }
 
-
     public LiteralCommandNode<CommandSourceStack> constructCommand() {
         return Commands.literal("warehouse")
 

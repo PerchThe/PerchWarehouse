@@ -6,9 +6,10 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import dev.ev1dent.perchWarehouse.WarehousePlugin;
 import dev.ev1dent.perchWarehouse.configuration.MessageManager;
 import dev.ev1dent.perchWarehouse.managers.WarehouseManager;
-import dev.ev1dent.perchWarehouse.utilities.MiniUtil;
+import dev.ev1dent.perchWarehouse.utilities.Utils;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
+import org.bukkit.command.CommandSender;
 
 public class StartEventSubcommand {
 
@@ -28,7 +29,8 @@ public class StartEventSubcommand {
                 .executes(ctx -> {
                     int stagingTime = ctx.getArgument("staging_time (minutes)", Integer.class);
                     warehouseManager.openRegistration(stagingTime);
-                    ctx.getSource().getSender().sendMessage(MiniUtil.format(messageManager.getMessage("starting-event").replace("%time%", String.valueOf(stagingTime))));
+                    CommandSender sender = ctx.getSource().getSender();
+                    sender.sendMessage(Utils.format("starting-event", String.valueOf(stagingTime)));
                     return Command.SINGLE_SUCCESS;
                 })
             );

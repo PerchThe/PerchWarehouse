@@ -5,7 +5,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import dev.ev1dent.perchWarehouse.WarehousePlugin;
 import dev.ev1dent.perchWarehouse.configuration.MessageManager;
 import dev.ev1dent.perchWarehouse.configuration.TierManager;
-import dev.ev1dent.perchWarehouse.utilities.MiniUtil;
+import dev.ev1dent.perchWarehouse.utilities.Utils;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import org.bukkit.command.CommandSender;
@@ -28,7 +28,7 @@ public class ReloadSubcommand {
                 messageManager.reloadConfig();
                 tierManager.reload();
                 CommandSender sender = ctx.getSource().getSender();
-                sender.sendMessage(MiniUtil.format(messageManager.getMessage("reloaded-configuration")));
+                sender.sendMessage(Utils.format("reloaded-configuration"));
                 return Command.SINGLE_SUCCESS;
             });
     }

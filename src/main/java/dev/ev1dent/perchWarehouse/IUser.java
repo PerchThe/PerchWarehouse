@@ -1,6 +1,7 @@
 package dev.ev1dent.perchWarehouse;
 
-import dev.ev1dent.perchWarehouse.configuration.MessageManager;
+import com.earth2me.essentials.Essentials;
+import com.earth2me.essentials.User;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -10,17 +11,18 @@ public record IUser(Player base) {
         return WarehousePlugin.getPlugin(WarehousePlugin.class);
     }
 
-    static MessageManager message = new MessageManager(plugin());
-
     public static IUser getUser(Player player) {
         return new IUser(player);
     }
 
-    public Player getBase() {
-        return base;
+    public void teleport(Location location) {
+        User user = Essentials.getPlugin(Essentials.class).getUser(base.getUniqueId());
+        user.setLastLocation(base.getLocation());
+        base.teleport(location);
     }
 
-    public void teleport(Location location) {
-        base.teleport(location);
+    public void sendBack(){
+        User user = Essentials.getPlugin(Essentials.class).getUser(base.getUniqueId());
+        base.teleport(user.getLastLocation());
     }
 }

@@ -5,3 +5,5 @@ api-version: '1.21'
 prefix: Warehouse
 load: STARTUP
 authors: [ Evident_Dev ]
+depend:
+  - Essentials

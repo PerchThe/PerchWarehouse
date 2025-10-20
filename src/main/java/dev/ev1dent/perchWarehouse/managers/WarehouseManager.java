@@ -1,5 +1,6 @@
 package dev.ev1dent.perchWarehouse.managers;
 
+import dev.ev1dent.perchWarehouse.Events.QueueOpenEvent;
 import dev.ev1dent.perchWarehouse.IUser;
 import dev.ev1dent.perchWarehouse.WarehousePlugin;
 import dev.ev1dent.perchWarehouse.configuration.TierManager;
@@ -30,6 +31,9 @@ public class WarehouseManager {
     }
 
     public void openRegistration(int time){
+        QueueOpenEvent event = new QueueOpenEvent();
+        Bukkit.getPluginManager().callEvent(event);
+
         queueManager.isOpened = true;
         Utils.getDebugLogger("Queue Opened for " + time + " minutes");
         TaskChain.newChain().delay(time * 1200).add(new TaskChain.GenericTask() {
@@ -55,10 +59,10 @@ public class WarehouseManager {
         queueManager.isOpened = false;
     }
 
-    public void stop(){
+    public void stop(Player player){
         queueManager.isOpened = false;
         Utils.getDebugLogger("WarehouseManager.stop()");
-        //TODO teleport all players to their back location
+
         queueManager.clearQueue();
     }
 

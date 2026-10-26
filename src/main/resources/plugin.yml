@@ -1,9 +1,54 @@
 name: PerchWarehouse
-version: '1.0-Development'
+version: '${version}'
 main: dev.ev1dent.perchWarehouse.WarehousePlugin
-api-version: '1.21'
+api-version: '26.1'
 prefix: Warehouse
 load: STARTUP
 authors: [ Evident_Dev ]
 depend:
   - Essentials
+
+permissions:
+  warehouse.join:
+    default: true
+  warehouse.leave:
+    default: true
+  warehouse.info:
+    default: true
+  warehouse.add:
+    default: op
+  warehouse.kick:
+    default: op
+  warehouse.startevent:
+    default: op
+  warehouse.forcestart:
+    default: op
+  warehouse.forcestop:
+    default: op
+  warehouse.create:
+    default: op
+  warehouse.delete:
+    default: op
+  warehouse.editor:
+    default: op
+  warehouse.reload:
+    default: op
+  warehouse.debug:
+    default: op
+  warehouse.moderator:
+    default: op
+    children:
+      warehouse.add: true
+      warehouse.kick: true
+  warehouse.admin:
+    default: op
+    children:
+      warehouse.moderator: true
+      warehouse.startevent: true
+      warehouse.forcestart: true
+      warehouse.forcestop: true
+      warehouse.create: true
+      warehouse.delete: true
+      warehouse.editor: true
+      warehouse.reload: true
+      warehouse.debug: true

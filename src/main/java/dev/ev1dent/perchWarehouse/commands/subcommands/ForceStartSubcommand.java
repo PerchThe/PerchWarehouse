@@ -13,18 +13,18 @@ public class ForceStartSubcommand {
 
     private final WarehouseManager warehouseManager;
 
-
     public ForceStartSubcommand(WarehousePlugin warehousePlugin){
-        this.warehouseManager = new WarehouseManager();
+        this.warehouseManager = warehousePlugin.getWarehouseManager();
     }
 
+    /** Closes the open queue right now and starts the event. */
     public LiteralArgumentBuilder<CommandSourceStack> create() {
         return Commands.literal("forcestart")
             .requires(source -> source.getSender().hasPermission("warehouse.forcestart"))
             .executes(ctx -> {
-                warehouseManager.start();
                 CommandSender sender = ctx.getSource().getSender();
-                sender.sendMessage(Utils.format("started-warehouse"));
+                String problem = warehouseManager.start();
+                sender.sendMessage(Utils.format(problem != null ? problem : "started-warehouse"));
                 return Command.SINGLE_SUCCESS;
             });
     }

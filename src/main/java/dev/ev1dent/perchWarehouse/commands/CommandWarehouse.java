@@ -18,6 +18,7 @@ public class CommandWarehouse {
             //default commands
             .then(new JoinSubcommand(warehousePlugin()).create())
             .then(new LeaveSubcommand(warehousePlugin()).create())
+            .then(new InfoSubcommand(warehousePlugin()).create())
 
             //moderator commands
             .then(new AddSubcommand(warehousePlugin()).create())
@@ -26,11 +27,12 @@ public class CommandWarehouse {
             //administrator commands
             .then(new StartEventSubcommand(warehousePlugin()).create())
             .then(new CreateSubcommand(warehousePlugin()).create())
-            .then(new EditSubcommand(warehousePlugin()).create())
+            .then(new EditorSubcommand(warehousePlugin()).create())
             .then(new DeleteSubcommand(warehousePlugin()).create())
             .then(new ForceStartSubcommand(warehousePlugin()).create())
             .then(new ForceStopSubcommand(warehousePlugin()).create())
             .then(new ReloadSubcommand(warehousePlugin()).create())
+            .then(new DebugSubcommand(warehousePlugin()).create())
             .build();
     }
 }

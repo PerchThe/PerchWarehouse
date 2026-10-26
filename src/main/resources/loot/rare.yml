@@ -1,0 +1,50 @@
+# =====================================================================
+#  Rarity: rare
+#  See common.yml for every option explained.
+# =====================================================================
+
+display-name: "<red><bold>Rare Crate"
+picks: "2-3"
+allow-duplicates: false
+
+firework:
+  enabled: true
+  type: BALL_LARGE
+  colors: [RED, "#FFAA00"]
+  fade: [WHITE]
+  flicker: true
+  trail: true
+  power: 0
+
+contents:
+  # always in the crate, on top of the picks
+  diamonds:
+    material: DIAMOND
+    amount: "4-8"
+    name: "<aqua><bold>Warehouse Diamond"
+    lore:
+      - "<gray>Pulled from the warehouse floor."
+    always: true
+  pickaxe:
+    material: DIAMOND_PICKAXE
+    name: "<gradient:aqua:light_purple>Foreman's Pickaxe</gradient>"
+    lore:
+      - "<gray>Property of the warehouse."
+    enchantments:
+      efficiency: 5
+      unbreaking: 3
+    weight: 30
+  netherite:
+    material: NETHERITE_SCRAP
+    amount: "1-2"
+    weight: 30
+  bonus:
+    weight: 25
+    commands:
+      - "say {player} found a bonus in a rare crate!"
+    message: "<gold>Bonus! <yellow>You found something extra."
+  blade:
+    item: "diamond_sword[enchantments={sharpness:5,looting:3}]"
+    name: "<red><bold>Warehouse Blade"
+    glow: true
+    weight: 15

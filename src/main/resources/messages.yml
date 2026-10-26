@@ -1,12 +1,116 @@
-joined-warehouse: "<green>Joined warehouse!"
-left-warehouse: "<green>Left warehouse!"
-added-to-warehouse: "<green>Added {0} to warehouse queue"
-kicked-from-warehouse: "<green>Kicked {0} from warehouse queue."
-created-warehouse: "<green>Created warehouse..."
-editing-warehouse: "<green>Opening warehouse editor..."
-deleted-warehouse: "<green>Deleted warehouse..."
-started-warehouse: "<green>Starting warehouse..."
-stopped-warehouse: "<green>Stopping warehouse..."
+# All messages use MiniMessage: https://docs.advntr.dev/minimessage/format.html
+# {0}, {1}, {2}... are filled in by the plugin. Each message says what they are.
+
+# ---------------------------------------------------------------- general
+players-only: "<red>Only players can do that."
 reloaded-configuration: "<green>Configuration reloaded..."
-queue-closed: "<green>Queue is closed."
-starting-event: "<green>Queue has opened for {0} minutes."
+
+# ---------------------------------------------------------------- queue
+# {0} = how long the queue is open
+queue-opened: "<gold><bold>WAREHOUSE</bold> <yellow>The warehouse queue is open for <white>{0}</white>! Type <white><click:run_command:'/warehouse join'><hover:show_text:'<gray>Click to join'>/warehouse join</hover></click></white> to join."
+# {0} = seconds left, {1} = players queued
+queue-closing-soon: "<gold><bold>WAREHOUSE</bold> <yellow>The queue closes in <white>{0}s</white> with <white>{1}</white> players. <white><click:run_command:'/warehouse join'>/warehouse join</click>"
+# {0} = time left, {1} = players queued
+queue-bossbar: "<yellow>Warehouse queue <gray>| <white>{1}</white> queued <gray>| <white>{0}</white> left <gray>| <white>/warehouse join"
+# {0} = players queued, {1} = time left
+queue-actionbar: "<yellow>You're queued for the warehouse <gray>- <white>{0}</white> players, closes in <white>{1}"
+queue-closed: "<red>The warehouse queue isn't open right now."
+queue-cancelled: "<gold><bold>WAREHOUSE</bold> <red>The warehouse event was cancelled."
+queue-not-open: "<red>The queue isn't open. Use /warehouse startevent first."
+# {0} = players queued
+joined-warehouse: "<green>Joined the warehouse queue! <gray>({0} queued) You'll keep your spot if you log out."
+left-warehouse: "<green>Left the warehouse queue."
+already-queued: "<yellow>You're already in the queue."
+not-queued: "<red>You're not in the queue."
+join-while-editing: "<red>Leave the editor before joining the queue."
+event-in-progress: "<red>A warehouse event is already in progress, wait for the next one."
+already-in-event: "<red>You're already in the warehouse."
+# {0} = time left
+still-queued: "<green>Welcome back, you're still in the warehouse queue. <gray>({0} left)"
+# {0} = players online, {1} = players needed
+not-enough-players: "<gold><bold>WAREHOUSE</bold> <red>Not enough players joined ({0}/{1}). The warehouse is cancelled."
+no-warehouse-ready: "<red>No warehouse is set up yet. Check /warehouse debug."
+event-already-running: "<red>A warehouse event is already running."
+
+# ---------------------------------------------------------------- staff
+# {0} = player
+added-to-warehouse: "<green>Added {0} to the warehouse queue."
+already-queued-other: "<yellow>{0} is already in the queue."
+added-by-staff: "<green>A staff member added you to the warehouse queue."
+# {0} = player
+kicked-from-warehouse: "<green>Removed {0} from the warehouse."
+not-queued-other: "<red>{0} isn't in the queue or the event."
+kicked-by-staff: "<red>A staff member removed you from the warehouse."
+# {0} = how long the queue is open
+starting-event: "<green>Opened the warehouse queue for {0}."
+started-warehouse: "<green>Closed the queue and started the warehouse..."
+stopped-warehouse: "<green>Stopped the warehouse event."
+nothing-to-stop: "<red>There is no warehouse event running."
+# {0} = name, {1} = capacity
+created-warehouse: "<green>Created warehouse <white>{0}</white> for up to {1} players. Set it up with <white>/warehouse editor {0}"
+# {0} = name
+deleted-warehouse: "<green>Deleted warehouse <white>{0}</white>."
+warehouse-exists: "<red>A warehouse called {0} already exists."
+unknown-warehouse: "<red>There is no warehouse called {0}."
+warehouse-in-use: "<red>{0} is being used or edited right now."
+
+# ---------------------------------------------------------------- event
+teleporting-to-warehouse: "<yellow>Teleporting you to the warehouse..."
+# {0} = seconds
+countdown-title: "<gold><bold>{0}"
+countdown-subtitle: "<yellow>Get ready to loot!"
+go-title: "<green><bold>GO!"
+go-subtitle: "<yellow>Find the crates!"
+# {0} = crates, {1} = event length
+event-started: "<gold><bold>WAREHOUSE</bold> <yellow><white>{0}</white> crates are hidden in the warehouse. You have <white>{1}</white>. Right-click them to loot!"
+# {0} = time left, {1} = crates left
+event-bossbar: "<light_purple>Warehouse <gray>| <white>{1}</white> crates left <gray>| <white>{0}"
+# {0} = player, {1} = the rarity's display-name from its loot file, {2} = crates left
+box-looted: "<gold>{0}</gold> <yellow>opened a {1}<reset><yellow>! <gray>({2} left)"
+all-boxes-looted: "<gold><bold>WAREHOUSE</bold> <yellow>Every crate has been looted!"
+inventory-full: "<red>Your inventory was full, some loot was dropped at your feet."
+event-not-started: "<red>The event hasn't started yet."
+not-in-event: "<red>You're not part of this warehouse event."
+no-teleport-in-event: "<red>You can't teleport out of the warehouse. Use <white>/warehouse leave</white> to leave."
+eliminated: "<red>You were eliminated from the warehouse."
+left-event: "<yellow>You left the warehouse event."
+returned-after-event: "<yellow>The warehouse event ended while you were away, you've been sent back."
+
+# ending reasons (sent to everyone still in the event)
+event-ended-time: "<gold><bold>WAREHOUSE</bold> <yellow>Time's up! Sending you back..."
+event-ended-empty: "<gold><bold>WAREHOUSE</bold> <yellow>Everyone left, the warehouse is over."
+event-ended-staff: "<gold><bold>WAREHOUSE</bold> <red>The warehouse event was stopped by staff."
+event-ended-shutdown: "<gold><bold>WAREHOUSE</bold> <red>The server is restarting, sending you back..."
+
+# ---------------------------------------------------------------- /warehouse info
+# {0} = time until next event
+info-next-event: "<yellow>The next warehouse opens in <white>{0}</white>."
+info-no-schedule: "<yellow>There's no warehouse scheduled right now."
+# {0} = time left, {1} = players queued
+info-queue-open: "<yellow>The queue is open! <white>{1}</white> queued, closes in <white>{0}</white>. <white><click:run_command:'/warehouse join'>/warehouse join"
+info-starting: "<yellow>A warehouse event is starting right now."
+# {0} = time left, {1} = crates left
+info-running: "<yellow>A warehouse event is running: <white>{1}</white> crates left, <white>{0}</white> remaining."
+
+# ---------------------------------------------------------------- editor
+# {0} = warehouse, {1} = spawns, {2} = guaranteed, {3} = random
+editor-entered: "<green>Editing <white>{0}</white> <gray>({1} spawns, {2} guaranteed, {3} random). <green>Place the marker blocks to add points, punch a marker (or sneak + right-click it) to remove it. Your inventory is saved and comes back when you exit."
+# {0} = warehouse
+editor-exited: "<green>Left the editor for <white>{0}</white>, your inventory is back."
+editor-already-editing: "<red>You're already in the editor. Use /warehouse editor exit first."
+editor-not-editing: "<red>You're not in the editor."
+editor-in-event: "<red>You can't edit while you're in a warehouse event."
+editor-warehouse-in-use: "<red>That warehouse is being used by an event right now."
+editor-backup-failed: "<red>Couldn't save your inventory, so the editor wasn't opened. Check the console."
+editor-restored-after-crash: "<yellow>The server restarted while you were in the warehouse editor, your inventory has been restored."
+# {0} = warehouse world
+editor-wrong-world: "<red>This warehouse is in <white>{0}</white>. Markers have to be in the same world."
+# {0} = marker type
+editor-marker-exists: "<red>There's already a {0} marker there."
+# {0} = marker type, {1} = how many of that type now
+editor-marker-added: "<green>Added a <white>{0}</white> marker. <gray>({1} total)"
+editor-marker-removed: "<yellow>Removed a <white>{0}</white> marker. <gray>({1} left)"
+# floating label above each marker. {0} = type, {1} = number, {2} = facing (spawns only)
+editor-marker-label: "<white>{0} #{1}<gray>{2}"
+# {0} = compass direction
+editor-facing: "facing {0}"

@@ -27,13 +27,18 @@ public class AddSubcommand {
             .then(Commands.argument("player", ArgumentTypes.player())
                 .executes(ctx -> {
                     Player player = ctx.getArgument("player", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst();
+                    CommandSender sender = ctx.getSource().getSender();
                     try {
-                        queueManager.addPlayer(player);
+                        if (!queueManager.addPlayer(player)) {
+                            sender.sendMessage(Utils.format("already-queued-other", player.getName()));
+                            return Command.SINGLE_SUCCESS;
+                        }
                     } catch (QueueClosedException e) {
+                        sender.sendMessage(Utils.format("queue-closed"));
                         return Command.SINGLE_SUCCESS;
                     }
-                    CommandSender sender = ctx.getSource().getSender();
                     sender.sendMessage(Utils.format("added-to-warehouse", player.getName()));
+                    player.sendMessage(Utils.format("added-by-staff"));
                     return Command.SINGLE_SUCCESS;
                 })
             );

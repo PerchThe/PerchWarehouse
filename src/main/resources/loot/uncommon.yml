@@ -1,0 +1,40 @@
+# =====================================================================
+#  Rarity: uncommon
+#  See common.yml for every option explained.
+# =====================================================================
+
+display-name: "<aqua>Uncommon Crate"
+picks: "2-3"
+allow-duplicates: false
+
+firework:
+  enabled: true
+  type: BURST
+  colors: [AQUA, BLUE]
+  fade: [WHITE]
+  flicker: false
+  trail: true
+
+contents:
+  # always in the crate, on top of the picks
+  steak:
+    material: COOKED_BEEF
+    amount: "16"
+    name: "<gold>Warehouse Rations"
+    always: true
+  gold:
+    material: GOLD_INGOT
+    amount: "4-10"
+    weight: 35
+  xp:
+    material: EXPERIENCE_BOTTLE
+    amount: "8-16"
+    weight: 30
+  diamonds:
+    material: DIAMOND
+    amount: "1-3"
+    weight: 20
+  golden_apple:
+    material: GOLDEN_APPLE
+    amount: "1-2"
+    weight: 15

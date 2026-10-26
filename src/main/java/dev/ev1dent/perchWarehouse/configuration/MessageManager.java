@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class MessageManager {
 
@@ -16,7 +17,7 @@ public class MessageManager {
 
     public MessageManager(WarehousePlugin plugin) {
         this.plugin = plugin;
-       saveDefaultConfig();
+        saveDefaultConfig();
     }
 
     public void reloadConfig() {
@@ -25,9 +26,10 @@ public class MessageManager {
 
         this.dataConfig = YamlConfiguration.loadConfiguration(this.configFile);
 
+        // missing keys fall back to the messages.yml inside the jar, so new messages work after updating
         InputStream defaultStream = this.plugin.getResource("messages.yml");
         if (defaultStream != null) {
-            YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream));
+            YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream, StandardCharsets.UTF_8));
             this.dataConfig.setDefaults(defaultConfig);
         }
     }
@@ -52,4 +54,3 @@ public class MessageManager {
         return getConfig().getString(key);
     }
 }
-

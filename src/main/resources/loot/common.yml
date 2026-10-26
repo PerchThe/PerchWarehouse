@@ -1,0 +1,62 @@
+# =====================================================================
+#  Rarity: common
+#  The file name is the rarity name. Use it under crates.rarities in a warehouse file.
+# =====================================================================
+
+# Shown in chat when someone opens one of these crates. MiniMessage.
+display-name: "<green>Common Crate"
+
+# How many entries are drawn from "contents" each time a crate is opened.
+# A number (2) or a range ("2-3"). Entries marked always: true are given on top of this.
+picks: "2-3"
+
+# false = an entry can only be drawn once per crate (no double iron).
+# true  = the same entry can be drawn more than once.
+allow-duplicates: false
+
+# The firework that goes off when the crate is opened.
+#   type:   BALL, BALL_LARGE, STAR, BURST, CREEPER
+#   colors / fade: color names (RED, AQUA, LIME...) or "#RRGGBB"
+#   set enabled: false to turn it off (a blast sound still plays)
+firework:
+  enabled: true
+  type: BALL
+  colors: [LIME, WHITE]
+  fade: [GREEN]
+  flicker: false
+  trail: true
+
+# What can be in the crate. The names (iron, bread...) are just labels for you.
+#   weight:   how likely this is to be drawn compared to the others. default 1
+#             iron 40 + bread 30 + coal 20 + gold 10 = 100, so gold is 10/100 = 10% per pick.
+#             weights don't need to add up to 100, it's always weight / total.
+#   always:   true = in every crate, doesn't use up a pick (weight is ignored)
+#   material: item name (DIAMOND, IRON_INGOT...)            - or -
+#   item:     full item string, same as /give, for anything advanced:
+#             "diamond_sword[enchantments={sharpness:5},unbreakable={}]"
+#   amount:   a number or a range ("4-12"). default 1
+#   name:     MiniMessage name. not italic unless you add <italic>
+#   lore:     list of MiniMessage lines
+#   enchantments: name: level   (sharpness: 5, efficiency: 4...). over-max levels are allowed
+#   glow:     true for the enchant shimmer without enchantments
+#   unbreakable: true / false
+#   custom-model-data: number, for resource packs
+#   commands: console commands run when this is given. {player} = their name
+#   message:  MiniMessage sent to the player when this is given. {player} = their name
+contents:
+  iron:
+    material: IRON_INGOT
+    amount: "4-12"
+    weight: 40
+  bread:
+    material: BREAD
+    amount: "8-16"
+    weight: 30
+  coal:
+    material: COAL
+    amount: "8-24"
+    weight: 20
+  gold:
+    material: GOLD_INGOT
+    amount: "2-6"
+    weight: 10

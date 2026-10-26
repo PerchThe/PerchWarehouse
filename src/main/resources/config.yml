@@ -4,3 +4,66 @@ aliases:
   - ware
 
 debug: false
+
+event:
+  # automatically open the queue every X minutes. /warehouse startevent still works when this is off.
+  auto-start: false
+  interval-minutes: 60
+  # how long the queue stays open when the event opens on its own.
+  queue-open-seconds: 120
+  # seconds before the queue closes that a reminder is broadcast.
+  announce-at: [60, 30, 10]
+  countdown-seconds: 5
+  duration-minutes: 10
+  min-players: 2
+  # gamemode players are put in for the event. ADVENTURE stops them breaking/placing blocks in the arena.
+  gamemode: ADVENTURE
+  # if every box has been looted, end the event this many seconds later instead of waiting for the timer.
+  end-when-looted-delay-seconds: 5
+
+combat:
+  # can participants hurt each other while the event is running?
+  pvp: false
+  # what happens when a participant dies: ELIMINATE (sent back, out of the event) or RESPAWN (back to a warehouse spawn)
+  on-death: ELIMINATE
+  # keep inventory and xp when dying inside the event.
+  keep-inventory: true
+
+display:
+  # show a boss bar to everyone online while the queue is open.
+  queue-bossbar: true
+  # show a boss bar to participants while the event is running.
+  event-bossbar: true
+
+editor:
+  # put admins in creative while they are in the editor.
+  creative: true
+  # marker items given to admins in /warehouse editor. material must be a placeable block.
+  # glow-color is the outline color of the marker in the world (any bukkit color name or #RRGGBB).
+  markers:
+    player-spawn:
+      material: LIME_CONCRETE
+      name: "<green><bold>Player Spawn Marker"
+      lore:
+        - "<gray>Place to add a player spawn point."
+        - "<gray>You face the way players will face."
+      glow-color: LIME
+    guaranteed:
+      material: YELLOW_CONCRETE
+      name: "<gold><bold>Guaranteed Crate Spot"
+      lore:
+        - "<gray>Place to add a spot that gets a crate every event."
+      glow-color: ORANGE
+    random:
+      material: LIGHT_BLUE_CONCRETE
+      name: "<aqua><bold>Random Crate Spot"
+      lore:
+        - "<gray>Place to add a possible crate spot."
+        - "<gray>Each event picks random-spawns of these."
+      glow-color: AQUA
+  exit-item:
+    material: BARRIER
+    name: "<red><bold>Exit Editor"
+    lore:
+      - "<gray>Right-click to leave the editor"
+      - "<gray>and get your inventory back."

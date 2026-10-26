@@ -13,22 +13,27 @@ import org.bukkit.command.CommandSender;
 public class StartEventSubcommand {
 
     private final WarehouseManager warehouseManager;
+    private final WarehousePlugin warehousePlugin;
 
     public StartEventSubcommand(WarehousePlugin warehousePlugin){
-        this.warehouseManager = new WarehouseManager();
+        this.warehousePlugin = warehousePlugin;
+        this.warehouseManager = warehousePlugin.getWarehouseManager();
     }
 
+    /** Opens the queue now. With no argument it uses event.queue-open-seconds from config.yml. */
     public LiteralArgumentBuilder<CommandSourceStack> create() {
         return Commands.literal("startevent")
             .requires(source -> source.getSender().hasPermission("warehouse.startevent"))
-            .then(Commands.argument("staging_time (minutes)", IntegerArgumentType.integer())
-                .executes(ctx -> {
-                    int stagingTime = ctx.getArgument("staging_time (minutes)", Integer.class);
-                    warehouseManager.openRegistration(stagingTime);
-                    CommandSender sender = ctx.getSource().getSender();
-                    sender.sendMessage(Utils.format("starting-event", String.valueOf(stagingTime)));
-                    return Command.SINGLE_SUCCESS;
-                })
+            .executes(ctx -> open(ctx.getSource().getSender(), warehousePlugin.getConfigManager().getQueueOpenSeconds()))
+            .then(Commands.argument("staging_time (minutes)", IntegerArgumentType.integer(1, 120))
+                .executes(ctx -> open(ctx.getSource().getSender(), ctx.getArgument("staging_time (minutes)", Integer.class) * 60))
             );
+    }
+
+    private int open(CommandSender sender, int seconds) {
+        String problem = warehouseManager.openRegistration(seconds);
+        if (problem != null) sender.sendMessage(Utils.format(problem));
+        else sender.sendMessage(Utils.format("starting-event", Utils.formatTime(seconds)));
+        return Command.SINGLE_SUCCESS;
     }
 }

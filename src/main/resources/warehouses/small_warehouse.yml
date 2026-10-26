@@ -1,0 +1,45 @@
+# =====================================================================
+#  small_warehouse
+#  The file name is the warehouse name (/warehouse editor small_warehouse).
+# =====================================================================
+
+# How many players this warehouse is built for. The event picks the smallest
+# warehouse that fits everyone who queued (or the biggest one if more queue).
+capacity: 10
+
+# The world this warehouse is in. Set automatically by the first marker you place in the editor.
+world: world
+
+crates:
+  # Guaranteed crate spots ALWAYS get a crate.
+  # On top of that, this many of the random crate spots are picked each event.
+  random-spawns: 4
+
+  # Which rarities can spawn here. Each name must match a file in the loot/ folder
+  # (common -> loot/common.yml). That file decides what's inside the crate.
+  #
+  #   weight:               how often this rarity is picked compared to the others.
+  #                         common 100 + uncommon 50 + rare 10 = 160, so rare is 10/160 (about 6%) per crate.
+  #   block:                the block placed in the warehouse. Shulker boxes or chests are best.
+  #   minimum-crate-spawns: OPTIONAL, always spawn at least this many of this rarity.
+  #   maximum-crate-spawns: OPTIONAL, never spawn more than this many of this rarity.
+  rarities:
+    common:
+      weight: 100
+      block: green_shulker_box
+    uncommon:
+      weight: 50
+      block: blue_shulker_box
+    rare:
+      weight: 10
+      block: red_shulker_box
+      minimum-crate-spawns: 1
+      maximum-crate-spawns: 1
+
+# Set these up in-game with /warehouse editor small_warehouse (you can also type them here).
+#   player-spawns: "x,y,z,yaw,pitch"
+#   guaranteed / random crate spots: "x,y,z" (block coordinates)
+markers:
+  player-spawns: []
+  guaranteed: []
+  random: []
